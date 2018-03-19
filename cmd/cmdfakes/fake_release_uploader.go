@@ -86,7 +86,11 @@ func (fake *FakeReleaseUploader) Invocations() map[string][][]interface{} {
 	defer fake.invocationsMutex.RUnlock()
 	fake.uploadReleasesMutex.RLock()
 	defer fake.uploadReleasesMutex.RUnlock()
-	return fake.invocations
+	copiedInvocations := map[string][][]interface{}{}
+	for key, value := range fake.invocations {
+		copiedInvocations[key] = value
+	}
+	return copiedInvocations
 }
 
 func (fake *FakeReleaseUploader) recordInvocation(key string, args []interface{}) {

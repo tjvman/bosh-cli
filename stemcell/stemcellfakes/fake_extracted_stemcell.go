@@ -512,7 +512,11 @@ func (fake *FakeExtractedStemcell) Invocations() map[string][][]interface{} {
 	defer fake.emptyImageMutex.RUnlock()
 	fake.stringMutex.RLock()
 	defer fake.stringMutex.RUnlock()
-	return fake.invocations
+	copiedInvocations := map[string][][]interface{}{}
+	for key, value := range fake.invocations {
+		copiedInvocations[key] = value
+	}
+	return copiedInvocations
 }
 
 func (fake *FakeExtractedStemcell) recordInvocation(key string, args []interface{}) {
